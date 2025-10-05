@@ -7,6 +7,7 @@ import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { openSettingsDialog } from '@/app/home/home.facade';
+import { Dependencies } from '@/app/home/components/dependencies';
 
 export default function HomePage() {
   async function testJob() {
@@ -33,6 +34,8 @@ export default function HomePage() {
           <SettingsIcon />
         </IconButton>
       </div>
+
+      <Dependencies />
 
       <div className="flex flex-col items-end">
         <Button

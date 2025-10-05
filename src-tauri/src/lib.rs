@@ -1,6 +1,9 @@
 #![cfg_attr(mobile, allow(unused))]
 
+mod dependencies;
+
 use anyhow::Result;
+use dependencies::{check_dependencies, install_dependencies};
 use std::path::Path;
 use tauri::{
     menu::{Menu, MenuItem},
@@ -100,7 +103,11 @@ pub fn run() {
                 api.prevent_close();
             }
         })
-        .invoke_handler(tauri::generate_handler![run_job])
+        .invoke_handler(tauri::generate_handler![
+            run_job,
+            check_dependencies,
+            install_dependencies
+        ])
         .run(tauri::generate_context!())
         .expect("falha ao iniciar Cadinho");
 }
