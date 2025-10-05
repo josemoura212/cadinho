@@ -21,6 +21,8 @@ const eslintConfig = [
       'src-tauri/target/**',
       'target/**',
       'core/target/**',
+      '**/*.min.js',
+      '**/*.min.css',
     ],
     settings: {
       'import/resolver': {
@@ -28,17 +30,6 @@ const eslintConfig = [
           project: '.',
         },
       },
-    },
-  },
-  {
-    files: ['**/.next/**', '**/target/**', '**/src-tauri/target/**'],
-    rules: {
-      '@typescript-eslint/no-unused-expressions': 'off',
-      '@typescript-eslint/no-unused-vars': 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/ban-ts-comment': 'off',
-      '@next/next/no-assign-module-variable': 'off',
-      '@typescript-eslint/no-empty-object-type': 'off',
     },
   },
 ];
