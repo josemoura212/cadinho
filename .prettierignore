@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production builds
+.next/
+out/
+build/
+dist/
+
+# Rust builds
+target/
+src-tauri/target/
+
+# Generated files
+*.min.js
+*.min.css
+
+# Logs
+*.log
+
+# Environment variables
+.env*
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Package manager
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# TypeScript build info
+*.tsbuildinfo

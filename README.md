@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cadinho
 
-## Getting Started
+Conversor universal de arquivos **desktop** (Tauri 2 + Next.js + Rust). Leve, offline e direto.
 
-First, run the development server:
+## Requisitos
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Rust (stable) + cargo
+- Node.js 18+ (ou 20) e gerenciador (pnpm, npm ou yarn)
+- Opcional: `ffmpeg` e `pandoc` no PATH (para mídia/documentos)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Estrutura
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+    cadinho/
+      Cargo.toml
+      core/
+        Cargo.toml
+        src/lib.rs
+      src-tauri/
+        Cargo.toml
+        tauri.conf.json
+        capabilities/default.json
+        src/lib.rs
+        icons/
+          icon.png
+      app/                  # Next (App Router)
+        page.tsx
+      package.json
+      next.config.mjs
+      tsconfig.json
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Configuração mínima
 
-## Learn More
+### Next (export estático) – `next.config.mjs`
 
-To learn more about Next.js, take a look at the following resources:
+    /** @type {import('next').NextConfig} */
+    export default {
+      output: "export",
+      images: { unoptimized: true }
+    };
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Tauri – `src-tauri/tauri.conf.json`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+    {
+      "productName": "Cadinho",
+      "identifier": "dev.seuuser.cadinho",
+      "version": "0.1.0",
+      "build": {
+        "beforeDevCommand": "next dev -p 3000",
+        "beforeBuildCommand": "next build",
+        "devUrl": "http://localhost:3000",
+        "frontendDist": "../out"
+      },
+      "app": {
+        "windows": [
+          { "label": "main", "title": "Cadinho", "visible": false, "width": 980, "height": 680 }
+        ]
+      },
+      "bundle": { "active": true, "targets": "all", "icon": ["icons/icon.png"] }
+    }
 
-## Deploy on Vercel
+### Capabilities – `src-tauri/capabilities/default.json`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    {
+      "$schema": "../gen/schemas/desktop-schema.json",
+      "identifier": "main",
+      "windows": ["main"],
+      "permissions": [
+        "core:window:default",
+        "dialog:allow-open",
+        "autostart:allow-enable",
+        "autostart:allow-disable",
+        "autostart:allow-is-enabled",
+        "log:default"
+      ]
+    }
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Scripts – `package.json`
+
+    {
+      "scripts": {
+        "dev": "tauri dev",
+        "build": "tauri build"
+      }
+    }
+
+## Como rodar
+
+    pnpm i
+    pnpm dev      # desenvolvimento (Next + Tauri)
+    pnpm build    # empacotar app desktop
