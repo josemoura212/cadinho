@@ -20,6 +20,10 @@ export function Dependencies() {
   const isInstallingFFmpeg = installing.includes('ffmpeg');
   const isInstallingPandoc = installing.includes('pandoc');
 
+  if (!installResults.ffmpeg && !installResults.pandoc) {
+    return null;
+  }
+
   return (
     <div className="flex flex-col items-center space-y-4 mb-8">
       <h2 className="text-xl font-semibold">Status das Dependências</h2>

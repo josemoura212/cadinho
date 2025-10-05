@@ -25,6 +25,9 @@ fn run_job(job: cadinho_core::Job) -> Result<(), String> {
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
+    // Definir variável de ambiente para resolver erro GBM no Manjaro/Wayland
+    std::env::set_var("WEBKIT_DISABLE_COMPOSITING_MODE", "1");
+
     tauri::Builder::default()
         // log
         .plugin(
