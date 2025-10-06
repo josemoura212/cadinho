@@ -1,9 +1,11 @@
 use anyhow::Result;
-use image::ImageFormat;
 use serde::{Deserialize, Serialize};
 use std::process::Command;
+mod images;
 mod media;
 use media::convert_media;
+
+use crate::images::convert_image;
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub enum JobKind {
@@ -29,29 +31,7 @@ pub fn convert(job: &Job) -> Result<()> {
     }
 }
 
-fn convert_image(job: &Job) -> Result<()> {
-    // Carregar a imagem
-    let img = image::open(&job.input)?;
-
-    // Determinar formato de saída
-    let format = match job.output_format.as_deref() {
-        Some("png") | None => ImageFormat::Png,
-        Some("jpg") | Some("jpeg") => ImageFormat::Jpeg,
-        Some("bmp") => ImageFormat::Bmp,
-        Some("tiff") => ImageFormat::Tiff,
-        Some(fmt) => {
-            return Err(anyhow::anyhow!("Formato de imagem não suportado: {}", fmt));
-        }
-    };
-
-    // Salvar no formato escolhido
-    img.save_with_format(&job.output, format)?;
-
-    Ok(())
-}
-
 fn convert_doc(job: &Job) -> Result<()> {
-    // Usar pandoc para converter documentos
     let status = Command::new("pandoc")
         .arg(&job.input)
         .arg("-o")
@@ -66,3 +46,6 @@ fn convert_doc(job: &Job) -> Result<()> {
         ))
     }
 }
+
+pub use crate::images::supported_image_formats;
+pub use crate::media::supported_media_formats;

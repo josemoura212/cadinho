@@ -43,8 +43,10 @@ pub fn convert_media(job: &Job) -> Result<()> {
         Some("ogg") => {
             cmd.arg("-vn").arg("-c:a").arg("libvorbis");
         }
-        Some(fmt) => {
-            return Err(anyhow::anyhow!("Formato de mídia não suportado: {}", fmt));
+        // Para formatos desconhecidos, tentar codecs padrão
+        Some(_) => {
+            // Assumir vídeo + áudio com codecs comuns
+            cmd.arg("-c:v").arg("libx264").arg("-c:a").arg("aac");
         }
     }
 

@@ -9,6 +9,7 @@
     "lint": "eslint src/ && prettier --write . && prettier --check .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "lint:rust": "cargo clippy --workspace --all-targets --all-features -- -D warnings && cargo fmt --all -- --check",
     "tauri": "tauri",
     "tauri:dev": "tauri dev",
     "tauri:build": "tauri build"

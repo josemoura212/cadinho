@@ -9,4 +9,4 @@ path = "src/lib.rs"
 [dependencies]
 anyhow.workspace = true
 serde.workspace = true
-image = "0.25"
+image = { version = "0.25", features = ["default-formats"] }

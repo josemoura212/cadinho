@@ -31,7 +31,7 @@ async fn install_ffmpeg() -> Result<String, String> {
     if cfg!(target_os = "windows") {
         // Tentar winget primeiro, depois chocolatey
         let winget_result = Command::new("winget")
-            .args(&[
+            .args([
                 "install",
                 "--id",
                 "Gyan.FFmpeg",
@@ -46,7 +46,7 @@ async fn install_ffmpeg() -> Result<String, String> {
         }
 
         let choco_result = Command::new("choco")
-            .args(&["install", "ffmpeg", "-y"])
+            .args(["install", "ffmpeg", "-y"])
             .output()
             .await;
 
@@ -58,7 +58,7 @@ async fn install_ffmpeg() -> Result<String, String> {
     } else if cfg!(target_os = "linux") {
         // Tentar apt primeiro
         let apt_result = Command::new("sudo")
-            .args(&[
+            .args([
                 "apt", "update", "&&", "sudo", "apt", "install", "-y", "ffmpeg",
             ])
             .output()
@@ -74,7 +74,7 @@ async fn install_ffmpeg() -> Result<String, String> {
         )
     } else if cfg!(target_os = "macos") {
         let brew_result = Command::new("brew")
-            .args(&["install", "ffmpeg"])
+            .args(["install", "ffmpeg"])
             .output()
             .await;
 
@@ -94,7 +94,7 @@ async fn install_pandoc() -> Result<String, String> {
     if cfg!(target_os = "windows") {
         // Tentar winget primeiro, depois chocolatey
         let winget_result = Command::new("winget")
-            .args(&[
+            .args([
                 "install",
                 "--id",
                 "JohnMacFarlane.Pandoc",
@@ -109,7 +109,7 @@ async fn install_pandoc() -> Result<String, String> {
         }
 
         let choco_result = Command::new("choco")
-            .args(&["install", "pandoc", "-y"])
+            .args(["install", "pandoc", "-y"])
             .output()
             .await;
 
@@ -121,7 +121,7 @@ async fn install_pandoc() -> Result<String, String> {
     } else if cfg!(target_os = "linux") {
         // Tentar apt primeiro
         let apt_result = Command::new("sudo")
-            .args(&[
+            .args([
                 "apt", "update", "&&", "sudo", "apt", "install", "-y", "pandoc",
             ])
             .output()
@@ -137,7 +137,7 @@ async fn install_pandoc() -> Result<String, String> {
         )
     } else if cfg!(target_os = "macos") {
         let brew_result = Command::new("brew")
-            .args(&["install", "pandoc"])
+            .args(["install", "pandoc"])
             .output()
             .await;
 
