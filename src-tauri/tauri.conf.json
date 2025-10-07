@@ -31,10 +31,12 @@
     "active": true,
     "targets": "all",
     "icon": [
+      "icons/cadinho.png",
       "icons/cadinho-32x32.png",
       "icons/cadinho-128x128.png",
-      "icons/cadinho.png",
-      "icons/cadinho.ico"
+      "icons/cadinho-512x512.png",
+      "icons/cadinho-32x32.ico",
+      "icons/cadinho-512x512.ico"
     ]
   }
 }
